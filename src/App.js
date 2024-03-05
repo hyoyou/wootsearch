@@ -1,6 +1,6 @@
 import "./App.css";
 import { ThemeProvider } from "@fluentui/react";
-import { SearchBar } from "./searchbox";
+import { SearchBar } from "./components/SearchBar/SearchBar";
 
 function App() {
   return (
@@ -9,9 +9,7 @@ function App() {
         <header className="App-header">
           <h1>Woot Search</h1>
         </header>
-        <div>
-          <SearchBar />
-        </div>
+        <SearchBar />
       </div>
     </ThemeProvider>
   );
