@@ -1,6 +1,12 @@
+import os
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from dotenv import load_dotenv
+
+load_dotenv()
+
+MY_ENV_VAR = os.getenv('WOOT_API_KEY')
 
 @api_view(['GET'])
 def display_items(request):
