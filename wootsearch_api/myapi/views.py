@@ -1,4 +1,5 @@
 import os
+import requests
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -8,10 +9,27 @@ load_dotenv()
 
 MY_ENV_VAR = os.getenv('WOOT_API_KEY')
 
+
 @api_view(['GET'])
 def display_items(request):
-    # load env file with API key
-    # https://stackoverflow.com/questions/40216311/reading-in-environment-variables-from-an-environment-file
-    # make the api call
-    # manipulate data and return to client
-    return Response({'message': 'This is a list of items'})
+    url = "https://developer.woot.com/feed/computers"
+    headers = {"Accept": "application/json",
+    'X-Api-Key': MY_ENV_VAR}
+
+    req = requests.get(url, headers=headers)
+    data = req.json()
+    items = data['Items']
+
+    response = []
+    # [{title, Url, price, photo}]
+
+    for item in items:
+        item_for_sale = {}
+        item_for_sale['Title'] = item['Title']
+        # item_for_sale['URL'] = item['URL']
+        # item_for_sale['SalePrice'] = item['SalePrice']
+        # item_for_sale['Photo'] = item['Photo']
+        response.append(item_for_sale)
+
+    # return Response({'message': response})
+    return Response(response)
